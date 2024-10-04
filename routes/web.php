@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManagementController;
@@ -50,3 +51,10 @@ Route::get('/category/edit/{id}', [CategoryController::class, 'edit'])->name('ca
 Route::post('/category/update/{id}', [CategoryController::class, 'update'])->name('category.update');
 Route::post('/category/delete/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
 Route::post('/category/status/{id}', [CategoryController::class, 'status'])->name('category.status');
+
+
+
+
+// blog
+
+Route::resource('blog', BlogController::class);

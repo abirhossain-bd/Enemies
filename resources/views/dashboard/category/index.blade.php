@@ -1,6 +1,12 @@
 @extends('layouts.dashboardmaster');
+@section('title')
+    Category
+
+@endsection
 
 @section('content')
+<x-breadcum title="Category show page"></x-breadcum>
+
 
 <div class="row">
     <div class="col-lg-8">

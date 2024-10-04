@@ -1,7 +1,14 @@
 @extends('layouts.dashboardmaster')
 
+@section('title')
+    Profile
+
+@endsection
+
 
 @section('content')
+<x-breadcum title="Profile edit page"></x-breadcum>
+
 
 <div class="row">
     <div class="col-lg-6">

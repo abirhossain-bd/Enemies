@@ -1,8 +1,14 @@
 
 @extends('layouts.dashboardmaster')
 
+@section('title')
+    Authentication
+
+@endsection
 
 @section('content')
+<x-breadcum title="Authentications show page"></x-breadcum>
+
 <div class="row">
     <div class="col-lg-6" >
         <div class="card">

@@ -1,6 +1,12 @@
 @extends('layouts.dashboardmaster')
 
+@section('title')
+    Role
+
+@endsection
+
 @section('content')
+<x-breadcum title="Role assign page"></x-breadcum>
 
 <div class="row">
     <div class="col-lg-6" >
