@@ -67,7 +67,7 @@
                 <h4 class="header-title ">All bloggers table</h4>
 
 
-                <div class="table-responsive" style="overflow: scroll; height:400px">
+                <div class="table-responsive" style="overflow: scroll; max-height:400px">
                     <table class="table table-primary  mb-0">
                         <thead>
                             <tr class="">
@@ -138,7 +138,7 @@
                 <h4 class="header-title ">All users table</h4>
 
 
-                <div class="table-responsive" style="overflow: scroll; height:400px">
+                <div class="table-responsive" style="overflow: scroll; max-height:400px">
                     <table class="table table-primary  mb-0">
                         <thead>
                             <tr class="">

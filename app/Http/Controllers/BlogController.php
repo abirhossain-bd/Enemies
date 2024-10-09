@@ -10,6 +10,8 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Str;
 
+use function PHPUnit\Framework\fileExists;
+
 class BlogController extends Controller
 {
     /**
@@ -17,7 +19,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::latest()->get();
+        $blogs = Blog::latest()->paginate(2);
         return view('dashboard.blog.index', compact('blogs'));
     }
 
@@ -47,11 +49,13 @@ class BlogController extends Controller
     if ($request->hasFile('thumbnail')) {
         $newname = Auth::user()->id . '-' . Str::random(4) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
         $image = $manager->read($request->file('thumbnail'));
-        $image->toPng()->save(base_path('public/uploads/blog/' . $newname));
+        $image->toPng()->save(base_path('public/uploads/blog/'.$newname));
+
+
 
         // user_id add koro
         Blog::create([
-            'user_id' => Auth::user()->id, // user_id er value add kora
+            'user_id' => Auth::user()->id,
             'category_id' => $request->category_id,
             'title' => $request->title,
             'slug' => $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->title, '-'),
@@ -64,6 +68,7 @@ class BlogController extends Controller
         return redirect()->route('blog.index')->with('success', 'Blog Created Successfully');
     }
 }
+
 
 
     /**
@@ -79,7 +84,8 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        //
+        $categories = Category::where('status','active')->latest()->get();
+        return view('dashboard.blog.edit',compact('categories', 'blog'));
     }
 
     /**
@@ -87,7 +93,54 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+        $manager = new ImageManager(new Driver());
+        $request->validate([
+            'category_id' => 'required',
+            'title' => 'required',
+            'short_description' => 'required|max:350',
+            'description' => 'required',
+        ]);
+
+        if($request->hasFile('thumbnail')){
+            $blog = Blog::find($blog->id);
+
+            if($blog->thumbnail){
+            $oldpath = base_path('public/uploads/blog/'. $blog->thumbnail);
+            if(file_exists($oldpath)){
+                unlink($oldpath);
+            }
+        }
+
+
+            $newname = Auth::user()->id . '-' . Str::random(4) . '.' . $request->file('thumbnail')->getClientOriginalExtension();
+            $image = $manager->read($request->file('thumbnail'));
+            $image->toPng()->save(base_path('public/uploads/blog/'. $newname));
+
+
+            Blog::find($blog->id)->update([
+                'user_id' => Auth::user()->id,
+                'category_id' => $request->category_id,
+                'title' => $request->title,
+                'slug' => $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->title, '-'),
+                'short_description' => $request->short_description,
+                'description' => $request->description,
+                'thumbnail' => $newname,
+                'updated_at' => now(),
+            ]);
+            return redirect()->route('blog.index')->with('success','Blog Updated Successfully!');
+
+        }else{
+            Blog::find($blog->id)->update([
+                'user_id' => Auth::user()->id,
+                'category_id' => $request->category_id,
+                'title' => $request->title,
+                'slug' => $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->title, '-'),
+                'short_description' => $request->short_description,
+                'description' => $request->description,
+                'updated_at' => now(),
+            ]);
+            return redirect()->route('blog.index')->with('success','Blog Updated Successfully!');
+        }
     }
 
     /**
@@ -95,6 +148,17 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
+        $blog = Blog::find($blog->id);
+
+            if($blog->thumbnail){
+            $oldpath = base_path('public/uploads/blog/'. $blog->thumbnail);
+            if(file_exists($oldpath)){
+                unlink($oldpath);
+            }
+        }
+
+        Blog::find($blog->id)->delete();
+        return redirect()->route('blog.index')->with('success', 'Blog Created Successfully');
+
     }
 }

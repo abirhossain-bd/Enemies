@@ -1,19 +1,22 @@
 @extends('layouts.dashboardmaster')
+
 @section('title')
-    Blog
+
+Blog Edit
 
 @endsection
 
 @section('content')
-<x-breadcum title="Blog create page"></x-breadcum>
+<x-breadcum title="Blog Edit page"></x-breadcum>
 
 <div class="col-lg-12" >
     <div class="card">
         <div class="card-body text-dark" style="background-color: #c1d7b9">
-            <h4 class="header-title mb-3"> Blog Create </h4>
+            <h4 class="header-title mb-3"> Blog Edit Content </h4>
 
-            <form role="form" action="{{ route('blog.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('blog.update', $blog->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PATCH')
                 <div class="row mb-3">
                     <label for="inputEmail3" class="col-sm-3 col-form-label fw-bold"> Blog Title</label>
                     <div class="col-sm-9">
@@ -21,7 +24,7 @@
                             <option> Select </option>
                             <optgroup label="Alaskan/Hawaiian Time Zone">
                                 @forelse ($categories as $cat)
-                                    <option value="{{ $cat->id }}">{{ $cat->title }}</option>
+                                    <option {{ $blog->category_id == $cat->id ? 'selected' : '' }} value="{{ $cat->id }}">{{ $cat->title }}</option>
                                 @empty
 
                                 @endforelse
@@ -40,7 +43,7 @@
                 <div class="row mb-3">
                     <label for="inputEmail3" class="col-sm-3 col-form-label fw-bold"> Blog Title</label>
                     <div class="col-sm-9">
-                        <input  name="title" type="text" class="form-control" id="inputEmail3" placeholder="Title">
+                        <input  name="title" type="text" class="form-control" id="inputEmail3" placeholder="Title" value="{{ $blog->title }}">
                         @error('title')
                             <p class="text-danger">{{ $message }}</p>
 
@@ -50,7 +53,7 @@
                 <div class="row mb-3">
                     <label for="inputEmail3" class="col-sm-3 col-form-label fw-bold"> Blog Slug</label>
                     <div class="col-sm-9">
-                        <input name="slug" type="text" class="form-control mt-2" id="inputEmail3" placeholder="Slug">
+                        <input name="slug" type="text" class="form-control mt-2" id="inputEmail3" placeholder="Slug" value="{{ $blog->slug }}">
                         @error('slug')
                             <p class="text-danger">{{ $message }}</p>
 
@@ -61,7 +64,7 @@
                 <div class="row mb-3">
                     <label for="inputEmail3" class="col-sm-3 col-form-label fw-bold">Blog Short Description </label>
                     <div class="col-sm-9">
-                        <textarea name="short_description" type="text" class="form-control mt-2" id="abirproject"></textarea>
+                        <textarea name="short_description" type="text" class="form-control mt-2" id="abirp">{{ $blog->short_description }}</textarea>
                         @error('short_description')
                             <p class="text-danger">{{ $message }}</p>
 
@@ -72,7 +75,7 @@
                 <div class="row mb-3">
                     <label for="inputEmail3" class="col-sm-3 col-form-label fw-bold">Blog Description </label>
                     <div class="col-sm-9">
-                        <textarea name="description" type="text" class="form-control mt-2" id="fulchadproject"></textarea>
+                        <textarea name="description" type="text" class="form-control mt-2" id="fulchadp">{{ $blog->description }}</textarea>
                         @error('description')
                             <p class="text-danger">{{ $message }}</p>
 
@@ -82,7 +85,7 @@
                 <div class="row mb-3">
                     <label for="inputEmail3" class="col-sm-3 col-form-label fw-bold"> Blog Image </label>
                     <div class="col-sm-9">
-                        <img id="blog_img" src="{{ asset('uploads/default/demo.jpeg') }}" alt="" style="height: 120px; widht:100%; object-fit:contain; border-radius:30px; margin: 10px 0;">
+                        <img id="blog_img" src="{{ asset('uploads/blog') }}/{{ $blog->thumbnail }}" alt="" style="height: 120px; widht:100%; object-fit:contain; border-radius:30px; margin: 10px 0;">
                         <input onchange="document.querySelector('#blog_img').src=window.URL.createObjectURL(this.files[0]) " name="thumbnail" type="file" class="form-control mt-2" id="inputEmail3" >
                         @error('thumbnail')
                             <p class="text-danger">{{ $message }}</p>
@@ -109,7 +112,7 @@
 
 <script>
     tinymce.init({
-      selector: '#abirproject',
+      selector: '#abirp',
       plugins: [
         'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
         'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
@@ -129,7 +132,7 @@
 
 <script>
     tinymce.init({
-      selector: '#fulchadproject',
+      selector: '#fulchadp',
       plugins: [
         'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
         'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',

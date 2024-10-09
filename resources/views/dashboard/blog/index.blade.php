@@ -22,6 +22,7 @@
                                 <th>#</th>
                                 <th>Image</th>
                                 <th>Title</th>
+                                <th>Category Title</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -30,13 +31,16 @@
                            @forelse ($blogs as $blog)
                              <tr class="bg-primary">
                                  <th scope="row">
-                                     {{ $loop->index +1 }}
+                                     {{ $blogs->firstItem() + $loop->index }}
                                  </th>
                                  <td>
                                     <img src="{{ asset('uploads/blog') }}/{{ $blog->thumbnail }}" style="height: 100px; width:100px; border-radius:50%; border:4px solid rgb(47, 255, 0); box-shadow: -7px 5px 2px;">
                                  </td>
                                  <td>
                                     {{ $blog->title }}
+                                 </td>
+                                 <td>
+                                    {{ $blog->oneCategory->title }}
                                  </td>
                                  <td>
                                     <form id="enemy{{ $blog->id }}" action="{{ route('category.status', $blog->id) }}" method="POST">
@@ -50,11 +54,12 @@
                                  <td>
                                     <div class="d-flex justify-content-around">
                                         <div>
-                                            <a href="{{ route('category.edit',$blog->id) }}" class="btn btn-outline-info waves-effect waves-light"><i class="fa-solid fa-user-pen"></i></a>
+                                            <a href="{{ route('blog.edit',$blog->id) }}" class="btn btn-outline-info waves-effect waves-light"><i class="fa-solid fa-user-pen"></i></a>
                                         </div>
                                         <div>
-                                            <form action="{{ route('category.destroy', $blog->id) }}" method="POST">
+                                            <form action="{{ route('blog.destroy', $blog->id) }}" method="POST">
                                                 @csrf
+                                                @method('DELETE')
                                                 <button type="submit" class="btn btn-outline-danger waves-effect waves-light"><i class="fa-solid fa-trash"></i></button>
                                             </form>
                                         </div>
@@ -68,6 +73,7 @@
                            @endforelse
 
                         </tbody>
+                        {{ $blogs->links() }}
                     </table>
                 </div> <!-- end table-responsive-->
             </div>
