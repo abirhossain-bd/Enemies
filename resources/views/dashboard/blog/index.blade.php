@@ -15,7 +15,7 @@
                 <h4 class="header-title text-dark fw-bold ">Blogs Table</h4>
 
 
-                <div class="table-responsive" style="overflow: scroll; max-height:500px">
+                <div class="table-responsive" >
                     <table class="table table-success  mb-0">
                         <thead>
                             <tr class="">
@@ -84,23 +84,17 @@
 
 
 @section('script')
-@if (session('success'))
-<script>
-    Toastify({
-  text: "{{ session('success') }}",
-  duration: 5000,
-  destination: "https://github.com/apvarun/toastify-js",
-  newWindow: true,
-  close: true,
-  gravity: "top",
-  position: "right",
-  stopOnFocus: true,
-  style: {
-    background: "linear-gradient(to right, #00b09b, #96c93d)",
-  }
-  onClick: function(){}
-}).showToast();
-</script>
-
-@endif
+    @if (session('success'))
+        <script>
+            Toastify({
+                text: "{{ session('success') }}",
+                duration: 5000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                stopOnFocus: true
+            }).showToast();
+        </script>
+    @endif
 @endsection

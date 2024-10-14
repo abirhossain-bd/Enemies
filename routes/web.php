@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
 use App\Http\Controllers\Frontend\CatBlogController;
 use App\Http\Controllers\Frontend\HomeController as FrontendHomeController;
 use App\Http\Controllers\HomeController;
@@ -16,6 +17,9 @@ Auth::routes(['register'=> false]);
 
 Route::get('/',[FrontendHomeController::class,'index'])->name('frontend');
 Route::get('/category/{slug}',[CatBlogController::class,'show'])->name('frontend.cat.blog');
+Route::get('/blogs',[FrontendBlogController::class,'index'])->name('frontend.blogs');
+Route::get('/blog/single/{slug}',[FrontendBlogController::class,'single'])->name('frontend.blog.single');
+Route::post('/blog/comment/{id}',[FrontendBlogController::class,'comment'])->name('frontend.blog.comment');
 
 
 

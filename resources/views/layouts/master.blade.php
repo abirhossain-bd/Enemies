@@ -23,6 +23,8 @@
     <!-- main style -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
 </head>
 
 <body>
@@ -48,10 +50,10 @@
                         <div class="collapse navbar-collapse" id="main_nav">
                             <ul class="navbar-nav ">
                                 <li class="nav-item ">
-                                    <a class="nav-link active" href="index.html"> Home </a>
+                                    <a class="nav-link {{ Route::currentRouteName() == 'frontend' ? 'active': '' }}" href="{{ route('frontend') }}"> Home </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="blog.html"> Blogs </a>
+                                    <a class="nav-link {{ Route::currentRouteName() == 'frontend.blogs' ? 'active': '' }}" href="{{ route('frontend.blogs') }}"> Blogs </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="author.html"> Authors </a>
@@ -214,8 +216,14 @@
     <script src="{{ asset('frontend') }}/assets/js/jquery.marquee.js"></script>
 
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+
+
     <!-- JS main  -->
     <script src="{{ asset('frontend') }}/assets/js/main.js"></script>
+
+    @yield('script')
 
 
 </body>
