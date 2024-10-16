@@ -24,6 +24,7 @@
                                 <th>Title</th>
                                 <th>Category Title</th>
                                 <th>Status</th>
+                                <th>Feature</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,11 +44,19 @@
                                     {{ $blog->oneCategory->title }}
                                  </td>
                                  <td>
-                                    <form id="enemy{{ $blog->id }}" action="{{ route('category.status', $blog->id) }}" method="POST">
+                                    <form id="statusForm{{ $blog->id }}" action="{{ route('blog.status', $blog->id) }}" method="POST">
                                         @csrf
                                     <div class="form-check form-switch">
-                                        <input onchange="document.querySelector('#enemy{{ $blog->id }}').submit()" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" {{ $blog->status == 'active' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="flexSwitchCheckChecked">{{ $blog->status }}</label>
+                                        <input onchange="document.querySelector('#statusForm{{ $blog->id }}').submit()" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" {{ $blog->status == 'active' ? 'checked' : '' }}>
+                                    </div>
+                                    </form>
+                                 </td>
+
+                                 <td>
+                                    <form id="featureForm{{ $blog->id }}" action="{{ route('blog.feature', $blog->id) }}" method="POST">
+                                        @csrf
+                                    <div class="form-check form-switch">
+                                        <input onchange="document.querySelector('#featureForm{{ $blog->id }}').submit()" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" {{ $blog->feature == true ? 'checked' : '' }}>
                                     </div>
                                     </form>
                                  </td>

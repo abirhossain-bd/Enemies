@@ -161,4 +161,41 @@ class BlogController extends Controller
         return redirect()->route('blog.index')->with('success', 'Blog Created Successfully');
 
     }
+
+    public function statusUpdate($id){
+        $blog =Blog::where('id',$id)->first();
+        if($blog->status == 'active'){
+            Blog::find($blog->id)->update([
+                'status' => 'deactive',
+                'updated_at' => now(),
+            ]);
+            return back()->with('success','Category Deactivated Successfully!');
+
+        }else{
+            Blog::find($blog->id)->update([
+                'status' => 'active',
+                'updated_at' => now(),
+            ]);
+            return back()->with('success','Category Activated Successfully!');
+
+        }
+    }
+
+    public function featureUpdate($id){
+        $blog = Blog::where('id',$id)->first();
+        if($blog->feature == false){
+            Blog::find($blog->id)->update([
+                'feature' => true,
+                'updated_at' =>now(),
+            ]);
+            return back()->with('success','This blog is now feature');
+
+        }else{
+            Blog::find($blog->id)->update([
+                'feature' => false,
+                'updated_at'=> now(),
+            ]);
+            return back()->with('success','This blog is now not feature');
+        }
+    }
 }

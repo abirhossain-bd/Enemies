@@ -96,52 +96,54 @@
                     @endif
 
 
-                    <li class="menu-item">
-                        <a href="#menuExpages" data-bs-toggle="collapse" class="menu-link waves-effect waves-light">
-                            <span class="menu-icon"><i class="bx bx-file"></i></span>
-                            <span class="menu-text"> Category </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="menuExpages">
-                            <ul class="sub-menu">
-                                <li class="menu-item">
-                                    <a class='menu-link' href='{{ route('category.index') }}'>
-                                        <span class="menu-text">Show Category</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a class='menu-link' href='pages-invoice.html'>
-                                        <span class="menu-text">Create Category</span>
-                                    </a>
-                                </li>
+                  @if (auth()->user()->role == 'manager' || auth()->user()->role == 'admin' || auth()->user()->role == 'blogger')
+                      <li class="menu-item">
+                          <a href="#menuExpages" data-bs-toggle="collapse" class="menu-link waves-effect waves-light">
+                              <span class="menu-icon"><i class="bx bx-file"></i></span>
+                              <span class="menu-text"> Category </span>
+                              <span class="menu-arrow"></span>
+                          </a>
+                          <div class="collapse" id="menuExpages">
+                              <ul class="sub-menu">
+                                  <li class="menu-item">
+                                      <a class='menu-link' href='{{ route('category.index') }}'>
+                                          <span class="menu-text">Show Category</span>
+                                      </a>
+                                  </li>
+                                  <li class="menu-item">
+                                      <a class='menu-link' href='pages-invoice.html'>
+                                          <span class="menu-text">Create Category</span>
+                                      </a>
+                                  </li>
 
-                        </div>
-                    </li>
+                          </div>
+                      </li>
 
 
 
 
-                    <li class="menu-item">
-                        <a href="#menuBlog" data-bs-toggle="collapse" class="menu-link waves-effect waves-light">
-                            <span class="menu-icon"><i class="bx bx-file"></i></span>
-                            <span class="menu-text"> Blog's </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="menuBlog">
-                            <ul class="sub-menu">
-                                <li class="menu-item">
-                                    <a class='menu-link' href='{{ route('blog.index') }}'>
-                                        <span class="menu-text">Show Blog</span>
-                                    </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a class='menu-link' href='{{ route('blog.create') }}'>
-                                        <span class="menu-text">Create Blog</span>
-                                    </a>
-                                </li>
+                      <li class="menu-item">
+                          <a href="#menuBlog" data-bs-toggle="collapse" class="menu-link waves-effect waves-light">
+                              <span class="menu-icon"><i class="bx bx-file"></i></span>
+                              <span class="menu-text"> Blog's </span>
+                              <span class="menu-arrow"></span>
+                          </a>
+                          <div class="collapse" id="menuBlog">
+                              <ul class="sub-menu">
+                                  <li class="menu-item">
+                                      <a class='menu-link' href='{{ route('blog.index') }}'>
+                                          <span class="menu-text">Show Blog</span>
+                                      </a>
+                                  </li>
+                                  <li class="menu-item">
+                                      <a class='menu-link' href='{{ route('blog.create') }}'>
+                                          <span class="menu-text">Create Blog</span>
+                                      </a>
+                                  </li>
 
-                        </div>
-                    </li>
+                          </div>
+                      </li>
+                  @endif
 
 
 
@@ -484,7 +486,9 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
     @yield('script')
+
 
 </body>
 

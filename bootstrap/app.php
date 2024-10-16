@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AuthenticateRoleMiddleware;
+use App\Http\Middleware\ExcessMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,7 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'authRole' => AuthenticateRoleMiddleware::class
+            'authRole' => AuthenticateRoleMiddleware::class,
+            'excess' => ExcessMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

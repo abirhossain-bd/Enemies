@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Auth;
 class BlogController extends Controller
 {
     public function index(){
-        $blogs = Blog::latest()->paginate(1);
+        $blogs = Blog::where('status','active')->latest()->paginate(1);
         return view('frontend.blog.index',compact('blogs'));
     }
     public function single($slug){
         $blog = Blog::where('slug', $slug)->first();
+        $blog->increment('counts');
         $comments = BlogComment::with('replies')->where('blog_id', $blog->id)->whereNull('parent_id')->get();
         return view('frontend.blog.single',compact('blog','comments'));
     }

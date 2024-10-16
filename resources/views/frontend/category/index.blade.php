@@ -53,7 +53,7 @@
                                 <p>{!! $blog->short_description !!}</p>
                             </div>
                             <div class="post-btn">
-                                <a href="post-single.html" class="btn-read-more">Continue Reading <i class="las la-long-arrow-alt-right"></i></a>
+                                <a href="{{ route('frontend.blog.single', $blog->slug) }}" class="btn-read-more">Continue Reading <i class="las la-long-arrow-alt-right"></i></a>
                             </div>
                         </div>
                     </div>

@@ -17,8 +17,10 @@ class Category extends Model
         'status',
     ];
 
-    public function oneblog(){
-        return $this->hasOne(Blog::class,'category_id','id');
+   
+    public function activeBlogs(){
+        return $this->hasMany(Blog::class, 'category_id', 'id')->where('status', 'active');
     }
+
 }
 

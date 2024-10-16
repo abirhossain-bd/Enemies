@@ -11,7 +11,7 @@ class CatBlogController extends Controller
 {
     public function show($slug){
         $category = Category::where('slug',$slug)->first();
-        $blogs = Blog::where('category_id', $category->id)->latest()->paginate(1);
+        $blogs = Blog::where('category_id', $category->id)->where('status', 'active')->latest()->paginate(1);
         return view('frontend.category.index',compact('blogs','category'));
     }
 }
