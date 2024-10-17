@@ -28,7 +28,7 @@ class GuestAuthenticationController extends Controller
             'password'=> Hash::make($request->password),
             'created_at' => now(),
         ]);
-        return redirect()->route('guest.login')->with('success','Registration Completed Successfully!');
+        return redirect()->route('guest.login')->with('success_reg','Registration Completed Successfully!');
     }
 
 
@@ -43,7 +43,7 @@ class GuestAuthenticationController extends Controller
             '*'=>'required',
         ]);
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('success','Login Successful!');
         }else{
             return redirect()->back()->with('error','Credential Does not match! ');
         }

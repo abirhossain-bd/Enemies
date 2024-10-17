@@ -93,6 +93,22 @@
 
                         </div>
                     </li>
+                    <li class="menu-item">
+                        <a href="#menuBlog" data-bs-toggle="collapse" class="menu-link waves-effect waves-light">
+                            <span class="menu-icon"><i class="bx bx-file"></i></span>
+                            <span class="menu-text"> Blogger Request's </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="menuBlog">
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <a class='menu-link' href='{{ route('request.show') }}'>
+                                        <span class="menu-text">Show Request's</span>
+                                    </a>
+                                </li>
+
+                        </div>
+                    </li>
                     @endif
 
 
@@ -489,6 +505,20 @@
 
     @yield('script')
 
+    @section('script')
+    @if (session('success'))
+        <script>
+            Toastify({
+                text: "{{ session('success') }}",
+                duration: 5000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                stopOnFocus: true
+            }).showToast();
+        </script>
+    @endif
 
 </body>
 

@@ -9,8 +9,12 @@ use App\Http\Controllers\Frontend\HomeController as FrontendHomeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 Auth::routes(['register'=> false]);
 
@@ -29,8 +33,15 @@ Route::get('/guest/register',[GuestAuthenticationController::class,'register'])-
 Route::post('/guest/register',[GuestAuthenticationController::class,'register_post'])->name('guest.register');
 
 
+Route::get('/request/sent',[RequestController::class,'index'])->name('request.show');
+Route::get('/request/sent/accept/{id}',[RequestController::class,'accept'])->name('request.accept');
+Route::get('/request/sent/cancel/{id}',[RequestController::class,'cancel'])->name('request.cancel');
+Route::post('/request/sent/{id}',[RequestController::class,'request_sent'])->name('request.sent');
 
+
+Route::middleware(['auth','verified'])->group(function(){
 // dashboard
+
 Route::get('/home',[HomeController::class, 'index'])->name('dashboard');
 
 // profile update
@@ -76,3 +87,29 @@ Route::resource('blog', BlogController::class);
 Route::post('/blog.status/{id}',[BlogController::class,'statusUpdate'])->name('blog.status');
 Route::post('/blog/feature/{id}',[BlogController::class,'featureUpdate'])->name('blog.feature');
 });
+
+});
+
+
+// email verification
+
+
+// Route::get('/email/verify', function () {
+//     return view('auth.verify');
+// })->middleware('auth')->name('verification.notice');
+
+
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');

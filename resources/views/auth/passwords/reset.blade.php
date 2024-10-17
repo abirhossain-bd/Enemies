@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" style="margin: 150px; 0;">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" style="background-color:#1abc9c">
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">

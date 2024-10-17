@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Request as ModelsRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.home.index');
+        $request = ModelsRequest::where('user_id',Auth::user()->id)->first();
+        return view('dashboard.home.index',compact('request'));
     }
 }

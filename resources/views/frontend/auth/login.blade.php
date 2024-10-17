@@ -34,7 +34,7 @@
                                 <input type="checkbox" class="custom-control-input" id="rememberMe">
                                     <label class="custom-control-label" for="rememberMe">Remember Me</label>
                                 </div>
-                                <a href="#" class="btn-link ">Forgot Password?</a>
+                                <a href="{{ route('password.request') }}" class="btn-link ">Forgot Password?</a>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn-custom">Log-in</button>
@@ -47,7 +47,7 @@
         </div>
     </section>
 
-    @if (session('success'))
+    @if (session('success_reg'))
         <script>
             const Toast = Swal.mixin({
             toast: true,
@@ -62,7 +62,7 @@
             });
             Toast.fire({
             icon: "success",
-            title: "{{ session('success') }}"
+            title: "{{ session('success_reg') }}"
             });
         </script>
     @endif
