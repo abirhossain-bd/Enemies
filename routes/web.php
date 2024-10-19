@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\SocialiteProviderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,7 +40,7 @@ Route::get('/request/sent/cancel/{id}',[RequestController::class,'cancel'])->nam
 Route::post('/request/sent/{id}',[RequestController::class,'request_sent'])->name('request.sent');
 
 
-Route::middleware(['auth','verified'])->group(function(){
+// Route::middleware(['auth','verified'])->group(function(){
 // dashboard
 
 Route::get('/home',[HomeController::class, 'index'])->name('dashboard');
@@ -88,15 +89,15 @@ Route::post('/blog.status/{id}',[BlogController::class,'statusUpdate'])->name('b
 Route::post('/blog/feature/{id}',[BlogController::class,'featureUpdate'])->name('blog.feature');
 });
 
-});
+// });
 
 
 // email verification
 
 
-// Route::get('/email/verify', function () {
-//     return view('auth.verify');
-// })->middleware('auth')->name('verification.notice');
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
 
 
 
@@ -113,3 +114,12 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+
+// socialite
+
+Route::get('/auth/{provider}/redirect',[SocialiteProviderController::class,'redirect']);
+Route::get('/auth/{provider}/callback',[SocialiteProviderController::class,'callback']);
+
+

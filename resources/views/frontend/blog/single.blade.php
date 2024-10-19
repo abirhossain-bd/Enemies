@@ -16,9 +16,18 @@
                         <div class="post-single-title">
                             <h2>{{ $blog->title }}</h2>
                             <ul class="entry-meta">
-                                <li class="post-author-img"><img src="{{ Avatar::create($blog->oneuser->name)->toBase64(); }}" alt=""></li>
-                                <li class="post-author"> <a href="author.html">{{ $blog->oneuser->name }}</a></li>
-                                <li class="entry-cat"> <a href="blog-layout-1.html" class="category-style-1 "> <span class="line"></span>{{ $blog->oneuser->role }}</a></li>
+                                <li class="post-author-img">
+                                    <img src="{{ $blog->oneuser ? Avatar::create($blog->oneuser->name)->toBase64() : asset('path/to/default/image.png') }}" alt="">
+                                </li>
+                                <li class="post-author">
+                                    <a href="author.html">{{ $blog->oneuser ? $blog->oneuser->name : 'Unknown Author' }}</a>
+                                </li>
+                                <li class="entry-cat">
+                                    <a href="blog-layout-1.html" class="category-style-1 ">
+                                        <span class="line"></span>{{ $blog->oneuser ? $blog->oneuser->role : 'No Role' }}
+                                    </a>
+                                </li>
+
                                 <li class="post-date"> <span class="line"></span> {{ Carbon\Carbon::parse($blog->created_at)->format('F d,Y') }}</li>
                             </ul>
 

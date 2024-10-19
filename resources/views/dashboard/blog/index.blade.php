@@ -92,18 +92,4 @@
 @endsection
 
 
-@section('script')
-    @if (session('success'))
-        <script>
-            Toastify({
-                text: "{{ session('success') }}",
-                duration: 5000,
-                close: true,
-                gravity: "top",
-                position: "right",
-                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-                stopOnFocus: true
-            }).showToast();
-        </script>
-    @endif
-@endsection
+

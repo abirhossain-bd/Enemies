@@ -387,18 +387,22 @@
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
 
-                                @if (auth()->user()->image == 'default.jpeg')
-                                <img src="{{ asset('uploads/default') }}/{{ auth()->user()->image }}" alt="user-image" class="rounded-circle">
+                                @if (auth()->user()->attempt_role == 'third_party')
 
+                                    <img src="{{ asset('uploads/default/default.jpeg') }}" alt="user-image" class="rounded-circle">
                                 @else
-                                <img src="{{ asset('uploads/profile') }}/{{ auth()->user()->image }}" alt="user-image" class="rounded-circle">
-
+                                    @if (auth()->user()->image == 'default.jpeg')
+                                        <img src="{{ asset('uploads/default') }}/{{ auth()->user()->image }}" alt="user-image" class="rounded-circle">
+                                    @else
+                                        <img src="{{ asset('uploads/profile') }}/{{ auth()->user()->image }}" alt="user-image" class="rounded-circle">
+                                    @endif
                                 @endif
 
                                 <span class="ms-1 d-none d-md-inline-block">
                                     {{ auth()->user()->name }} <i class="mdi mdi-chevron-down"></i>
                                 </span>
                             </a>
+
                             <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
                                 <!-- item-->
                                 <div class="dropdown-header noti-title">

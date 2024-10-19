@@ -37,9 +37,25 @@
                                 <a href="post-single.html">{{ $blog->title }}</a>
                             </h3>
                             <ul class="entry-meta">
-                                <li class="post-author-img"><img src="{{ Avatar::create($blog->oneuser->name)->toBase64(); }}" alt=""></li>
-                                <li class="post-author"> <a href="author.html">{{ $blog->oneuser->name }}</a></li>
-                                <li class="entry-cat"> <a href="blog-layout-1.html" class="category-style-1 "> <span class="line"></span>{{ $blog->oneuser->role }}</a></li>
+                                <li class="post-author-img">
+                                    @if($blog->oneUser)
+                                        <img src="{{ Avatar::create($blog->oneUser->name)->toBase64(); }}" alt="">
+                                    @else
+                                        <img src="{{ Avatar::create('Unknown')->toBase64(); }}" alt="">
+                                    @endif
+                                </li>
+                                <li class="post-author">
+                                    <a href="author.html">
+                                        {{ $blog->oneUser ? $blog->oneUser->name : 'Unknown Author' }}
+                                    </a>
+                                </li>
+                                <li class="entry-cat">
+                                    <a href="blog-layout-1.html" class="category-style-1 ">
+                                        <span class="line"></span>
+                                        {{ $blog->oneUser ? $blog->oneUser->role : 'Unknown Role' }}
+                                    </a>
+                                </li>
+
                                 <li class="post-date"> <span class="line"></span> {{ Carbon\Carbon::parse($blog->created_at)->format('F d,Y') }} </li>
                             </ul>
                             <div class="post-exerpt">

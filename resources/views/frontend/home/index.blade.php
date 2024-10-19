@@ -22,7 +22,12 @@
                                             <a href="post-single.html">{{ $feature->title }} </a>
                                         </h2>
                                         <ul class="entry-meta">
-                                            <li class="post-author"> <a href="author.html">{{ $feature->oneUser->name }}</a></li>
+                                            <li class="post-author">
+                                                <a href="author.html">
+                                                    {{ $feature->oneUser ? $feature->oneUser->name : 'Unknown Author' }}
+                                                </a>
+                                            </li>
+
                                             <li class="post-date"> <span class="line"></span> {{ Carbon\Carbon::parse($feature->created_at)->format('F d,Y') }}</li>
                                             <li class="post-timeread"> <span class="line"></span> 15 mins read</li>
                                         </ul>

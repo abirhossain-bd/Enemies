@@ -5,19 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
+use App\Models\User;
 
 class Blog extends Model
 {
     use HasFactory;
 
-    protected $guarded = [''];
+    // Guarded attributes
+    protected $guarded = []; // Use an empty array to allow all attributes to be mass assignable
 
-
-    public function oneCategory(){
-        return $this->hasOne(Category::class, 'id','category_id');
+    // Relationship with Category
+    public function oneCategory()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id'); // Use belongsTo for category relation
     }
 
-    public function oneuser(){
-        return $this->hasOne(User::class,'id','user_id');
+    // Relationship with User
+    public function oneUser()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id'); // Use belongsTo for user relation
     }
 }

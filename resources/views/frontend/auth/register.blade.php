@@ -6,6 +6,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-8 m-auto">
+                    <div class="d-flex justify-content-between mb-3">
+                        <a href="/auth/google/redirect" style="border: 2px solid black; padding:15px 25px">Login with Google</a>
+                        <a href="/auth/github/redirect" style="border: 2px solid black; padding:15px 25px">Login with Github</a>
+                    </div>
                     <div class="login-content">
                         <h4>Sign up</h4>
                         <!--form-->

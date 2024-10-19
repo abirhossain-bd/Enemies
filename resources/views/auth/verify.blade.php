@@ -13,6 +13,12 @@
                     <p>{{ session('message') }}</p>
 
                     @endif
+
+                    @if (Auth::user() && Auth::user()->hasVerifiedEmail())
+                        <script>
+                            window.location.href = "{{ route('dashboard') }}";
+                        </script>
+                    @endif
                     <form class="d-inline" method="POST" action="{{ route('verification.send') }}">
                         @csrf
 
