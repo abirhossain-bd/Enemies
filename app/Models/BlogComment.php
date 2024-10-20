@@ -12,11 +12,13 @@ class BlogComment extends Model
 
     protected $guarded = [""];
 
+    // Relationship with User model
     public function oneuser(){
-        return $this->hasOne(User::class,'id','user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
+    // Replies relationship to get child comments
     public function replies(){
-        return $this->hasMany(BlogComment::class,'parent_id','id');
+        return $this->hasMany(BlogComment::class, 'parent_id');
     }
 }

@@ -3,293 +3,116 @@
 @section('content')
 <!--post-single-->
 <section class="post-single">
-    <div class="container-fluid ">
-        <div class="row ">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-lg-12">
                 <!--post-single-image-->
-                    <div class="post-single-image d-flex justify-content-center">
-                        <img src="{{ asset('uploads/blog') }}/{{ $blog->thumbnail }}" alt="" style="height:600px;width:900px; object-fit:cover">
+                <div class="post-single-image d-flex justify-content-center">
+                    <img src="{{ asset('uploads/blog/' . $blog->thumbnail) }}" alt="{{ $blog->title }}" style="height:600px;width:900px; object-fit:cover">
+                </div>
+
+                <div class="post-single-body">
+                    <!--post-single-title-->
+                    <div class="post-single-title">
+                        <h2>{{ $blog->title }}</h2>
+                        <ul class="entry-meta">
+                            <li class="post-author-img">
+                                <img src="{{ $blog->oneuser ? Avatar::create($blog->oneuser->name)->toBase64() : asset('path/to/default/image.png') }}" alt="">
+                            </li>
+                            <li class="post-author">
+                                <a href="#">{{ $blog->oneuser ? $blog->oneUser->name : 'Unknown Author' }}</a>
+                            </li>
+                            <li class="post-date">
+                                <span class="line"></span> {{ Carbon\Carbon::parse($blog->created_at)->format('F d, Y') }}
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="post-single-body">
-                        <!--post-single-title-->
-                        <div class="post-single-title">
-                            <h2>{{ $blog->title }}</h2>
-                            <ul class="entry-meta">
-                                <li class="post-author-img">
-                                    <img src="{{ $blog->oneuser ? Avatar::create($blog->oneuser->name)->toBase64() : asset('path/to/default/image.png') }}" alt="">
-                                </li>
-                                <li class="post-author">
-                                    <a href="author.html">{{ $blog->oneuser ? $blog->oneuser->name : 'Unknown Author' }}</a>
-                                </li>
-                                <li class="entry-cat">
-                                    <a href="blog-layout-1.html" class="category-style-1 ">
-                                        <span class="line"></span>{{ $blog->oneuser ? $blog->oneuser->role : 'No Role' }}
-                                    </a>
-                                </li>
+                    <!--post-single-content-->
+                    <div class="post-single-content">
+                        <p>{!! $blog->short_description !!}</p>
+                        <p>{!! $blog->description !!}</p>
+                    </div>
 
-                                <li class="post-date"> <span class="line"></span> {{ Carbon\Carbon::parse($blog->created_at)->format('F d,Y') }}</li>
-                            </ul>
+                    <!--post-single-comments-->
+                    @auth
+                    <div class="post-single-comments">
+                        <h4>{{ $comments->count() }} Comments</h4>
+                        <ul class="comments">
+                            @foreach($comments as $comment)
+                            <div class="comment">
+                                <div class="d-flex mb-3">
+                                    <div class="commenter-img">
+                                        <img src="{{ Avatar::create($comment->name)->toBase64() }}" alt="" style="width:50px;height:50px;border-radius:50%;">
+                                    </div>
+                                    <div class="comment-content">
+                                        <p>{{ $comment->comment }}</p>
+                                        <small>By {{ $comment->name }}</small>
 
-                        </div>
+                                        <!-- Replies -->
+                                        @if($comment->replies)
+                                            @foreach($comment->replies as $reply)
+                                                <div class="reply">
+                                                    <div class="d-flex mt-3">
+                                                        <div class="commenter-img">
+                                                            <img src="{{ Avatar::create($reply->name)->toBase64() }}" alt="" style="width:40px;height:40px;border-radius:50%;">
+                                                        </div>
+                                                        <div class="comment-content">
+                                                            <p>{{ $reply->comment }}</p>
+                                                            <small>By {{ $reply->name }}</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
 
-                        <!--post-single-content-->
-                        <div class="post-single-content">
-                            <p>
-                                {!! $blog->short_description !!}
-                            </p>
-                            <h4> Make it simple, but significant. </h4>
-
-                            <p>
-                                {!! $blog->description !!}
-                            </p>
-
-                        </div>
-
-                        <!--post-single-bottom-->
-                        <div class="post-single-bottom">
-                            <div class="tags">
-                                <p>Tags:</p>
-                                <ul class="list-inline">
-                                    <li >
-                                        <a href="blog-layout-2.html">brading</a>
-                                    </li>
-                                    <li >
-                                        <a href="blog-layout-2.html">marketing</a>
-                                    </li>
-                                    <li >
-                                        <a href="blog-layout-3.html">tips</a>
-                                    </li>
-                                    <li >
-                                        <a href="blog-layout-4.html">design</a>
-                                    </li>
-                                    <li >
-                                        <a href="blog-layout-5.html">business
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="social-media">
-                                <p>Share on :</p>
-                                <ul class="list-inline">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fab fa-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fab fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fab fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" >
-                                            <i class="fab fa-youtube"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" >
-                                            <i class="fab fa-pinterest"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!--post-single-author-->
-                        <div class="post-single-author ">
-                            <div class="authors-info">
-                                <div class="image">
-                                    <a href="author.html" class="image">
-                                        <img src="{{ Avatar::create($blog->oneuser->name)->toBase64(); }}" alt="">
-                                    </a>
-                                </div>
-                                <div class="content">
-                                    <h4>{{ $blog->oneuser->name }}</h4>
-                                    <p> {{ $blog->oneuser->email }}
-                                    </p>
-                                    <div class="social-media">
-                                        <ul class="list-inline">
-                                            <li>
-                                                <a target="blank" href="https://www.facebook.com/profile.php?id=100081126881922">
-                                                    <i class="fab fa-facebook"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a target="blank" href="https://www.instagram.com/abir_freelancer/">
-                                                    <i class="fab fa-instagram"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a target="blank" href="https://x.com/M_Abir_H">
-                                                    <i class="fab fa-twitter"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a target="blank" href="https://www.youtube.com/@enjoythehub" >
-                                                    <i class="fab fa-youtube"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a target="blank" href="https://www.pinterest.com/mdabirhossain0350/" >
-                                                    <i class="fab fa-pinterest"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <!-- Reply form -->
+                                        <form action="{{ route('frontend.blog.comment', $blog->id) }}" method="POST" class="reply-form mt-2">
+                                            @csrf
+                                            <input type="hidden" name="parent_id" value="{{ $comment->id }}">
+                                            <input type="hidden" name="name" value="{{ auth()->user()->name }}">
+                                            <input type="hidden" name="email" value="{{ auth()->user()->email }}">
+                                            <div class="form-group">
+                                                <textarea name="comment" placeholder="Your Reply" class="form-control mb-2"></textarea>
+                                                <button type="submit" class="btn btn-primary">Reply</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
+                        </ul>
+
+                        <!--Leave-comments-->
+                        <div class="comments-form" id="comment">
+                            <h4>Leave a Comment</h4>
+                            <form action="{{ route('frontend.blog.comment', $blog->id) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="name" value="{{ auth()->user()->name }}">
+                                <input type="hidden" name="email" value="{{ auth()->user()->email }}">
+                                <div class="form-group">
+                                    <textarea name="comment" placeholder="Your Comment*" class="form-control" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Post Comment</button>
+                            </form>
                         </div>
-
-
-                        <!--post-single-comments-->
-                        @auth
-
-                        <div class="post-single-comments">
-                            <!--Comments-->
-                            <h4 >{{ $comments->count() }} Comments</h4>
-                            <ul class="comments">
-                                <!--comment1-->
-                                @foreach ($comments as $comment)
-                                    <li class="comment-item">
-                                        @if ($comment->oneuser->image == 'default.jpeg')
-
-                                        <img src="{{ Avatar::create($comment->oneuser->name)->toBase64(); }}" alt="">
-                                        @else
-
-                                        <img src="{{ asset('uploads/profile')}}/{{ $comment->oneuser->image }}" alt="">
-                                        @endif
-                                        <div class="content">
-                                            <div class="meta">
-                                                <ul class="list-inline">
-                                                    <li><a href="#">{{ $comment->name }}</a> </li>
-                                                    <li class="slash"></li>
-                                                    <li>{{ Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</li>
-                                                </ul>
-                                            </div>
-                                            <p>
-                                                {{ $comment->comment }}
-                                            </p>
-                                            <a href="#comment" onclick="myFun({{ $comment->id }})" class="btn-reply"><i class="las la-reply"></i> Reply</a>
-                                        </div>
-
-                                    </li>
-                                    @foreach ( $comment->replies as $reply)
-                                    <li class="comment-item pl-5">
-                                        @if ($reply->oneuser->image == 'default.jpeg')
-
-                                        <img src="{{ Avatar::create($reply->oneuser->name)->toBase64(); }}" alt="">
-                                        @else
-
-                                        <img src="{{ asset('uploads/profile')}}/{{ $reply->oneuser->image }}" alt="">
-                                        @endif
-                                        <div class="content">
-                                            <div class="meta">
-                                                <ul class="list-inline">
-                                                    <li><a href="#">{{ $reply->name }}</a> </li>
-                                                    <li class="slash"></li>
-                                                    <li>{{ Carbon\Carbon::parse($reply->created_at)->diffForHumans() }}</li>
-                                                </ul>
-                                            </div>
-                                            <p>
-                                                {{ $reply->comment }}
-                                            </p>
-                                            <a href="#comment" onclick="myFun({{ $reply->id }})" class="btn-reply"><i class="las la-reply"></i> Reply</a>
-                                        </div>
-
-                                    </li>
-                                    @foreach ($reply->replies as $over_reply )
-                                    <li class="comment-item " style="padding-left: 80px">
-                                        @if ($over_reply->oneuser->image == 'default.jpeg')
-
-                                        <img src="{{ Avatar::create($over_reply->oneuser->name)->toBase64(); }}" alt="">
-                                        @else
-
-                                        <img src="{{ asset('uploads/profile')}}/{{ $over_reply->oneuser->image }}" alt="">
-                                        @endif
-                                        <div class="content">
-                                            <div class="meta">
-                                                <ul class="list-inline">
-                                                    <li><a href="#">{{ $over_reply->name }}</a> </li>
-                                                    <li class="slash"></li>
-                                                    <li>{{ Carbon\Carbon::parse($over_reply->created_at)->diffForHumans() }}</li>
-                                                </ul>
-                                            </div>
-                                            <p>
-                                                {{ $over_reply->comment }}
-                                            </p>
-
-                                        </div>
-
-                                    </li>
-                                    @endforeach
-
-                                    @endforeach
-                                @endforeach
-
-                            </ul>
-                            <!--Leave-comments-->
-                            <div class="comments-form" id="comment">
-                                <h4 >Leave a Reply</h4>
-                                <!--form-->
-                                <form class="form " action="{{ route('frontend.blog.comment', $blog->id) }}" method="POST" id="main_contact_form">
-                                    @csrf
-                                    <p>Your email adress will not be published ,Requied fileds are marked*.</p>
-                                    <div class="alert alert-success contact_msg" style="display: none" role="alert">
-                                        Your message was sent successfully.
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input type="text" name="name" id="name" class="form-control" placeholder="Name*" >
-
-                                                <input type="text" name="parent_id" id="saqlinevalo" hidden>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input type="email" name="email" id="email" class="form-control" placeholder="Email*" >
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <textarea name="comment" id="message" cols="30" rows="5" class="form-control" placeholder="Message*" ></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-12">
-
-                                            <button type="submit" class="btn-custom">
-                                                Send Comment
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <!--/-->
-                            </div>
-                        </div>
-                        @endauth
                     </div>
+                    @endauth
+                </div>
             </div>
         </div>
     </div>
 </section>
-
-<script>
-    let saqlinevalo = document.querySelector('#saqlinevalo');
-    function myFun(id){
-        saqlinevalo.value = id;
-    }
-</script>
-
+<!--/post-single-->
 @endsection
 
-
+@section('scripts')
+<script>
+    function setParentId(commentId) {
+        document.querySelector('input[name="parent_id"]').value = commentId;
+    }
+</script>
+@endsection
 
 @section('script')
     @if (session('success'))

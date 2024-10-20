@@ -11,14 +11,16 @@ use Illuminate\Support\Facades\Auth;
 class BlogController extends Controller
 {
     public function index(){
-        $blogs = Blog::where('status','active')->latest()->paginate(1);
-        return view('frontend.blog.index',compact('blogs'));
+        $blogs = Blog::where('status', 'active')->latest()->paginate(1);
+        return view('frontend.blog.index', compact('blogs'));
     }
+
     public function single($slug){
         $blog = Blog::where('slug', $slug)->first();
         $blog->increment('counts');
+        // Parent comments with their replies
         $comments = BlogComment::with('replies')->where('blog_id', $blog->id)->whereNull('parent_id')->get();
-        return view('frontend.blog.single',compact('blog','comments'));
+        return view('frontend.blog.single', compact('blog', 'comments'));
     }
 
     public function comment(Request $request, $id){
@@ -27,14 +29,17 @@ class BlogController extends Controller
             'email' => 'required',
             'comment' => 'required',
         ]);
+
         BlogComment::create([
-            'user_id' => Auth::user()->id,
+            'user_id' => Auth::user()->id ?? null,
             'blog_id' => $id,
             'parent_id' => $request->parent_id,
             'name' => $request->name,
             'email' => $request->email,
             'comment' => $request->comment,
-            'created_at' =>now(),
+            'created_at' => now(),
         ]);
-        return redirect()->back()->with('success', 'Your comment has posted successfully!');    }
+
+        return redirect()->back()->with('success', 'Your comment has been posted successfully!');
+    }
 }
