@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
@@ -40,10 +41,12 @@ Route::get('/request/sent/cancel/{id}',[RequestController::class,'cancel'])->nam
 Route::post('/request/sent/{id}',[RequestController::class,'request_sent'])->name('request.sent');
 
 
-// Route::middleware(['auth','verified'])->group(function(){
+Route::middleware(['auth','verified'])->group(function(){
 // dashboard
 
 Route::get('/home',[HomeController::class, 'index'])->name('dashboard');
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // profile update
 Route::get('/profile',[ProfileController::class, 'index'])->name('profile.index');
@@ -60,12 +63,20 @@ Route::middleware('authRole')->group(function(){
     Route::post('/user/authenticate', [ManagementController::class, 'user_register'])->name('management.user.register');
     Route::post('/user/authenticate/role/undo/{id}', [ManagementController::class, 'role_undo'])->name('management.user.role.undo');
 
+    Route::get('/user/authenticate/edit/{id}', [ManagementController::class, 'edit'])->name('management.user.edit');
+    Route::post('/user/authenticate/update/{id}', [ManagementController::class, 'update'])->name('management.user.update');
+    Route::post('/user/authenticate/delete/{id}', [ManagementController::class, 'destroy'])->name('management.user.destroy');
+
+
 
     Route::get('/user/role/assign', [ManagementController::class, 'role_assign'])->name('role.index');
     Route::post('/user/role/assign', [ManagementController::class, 'role_assign_post'])->name('role.index');
     Route::post('/user/authenticate/role/undo/blogger/{id}', [ManagementController::class, 'role_undo_blogger'])->name('management.user.role.undo.blogger');
 
+    Route::post('/user/authenticate/delete/blogger/{id}', [ManagementController::class, 'destroy_blogger'])->name('management.user.delete.blogger');
+
     Route::post('/user/authenticate/role/undo/user/{id}', [ManagementController::class, 'role_undo_user'])->name('management.user.role.undo.user');
+    Route::post('/user/authenticate/delete/user/{id}', [ManagementController::class, 'destroy_user'])->name('management.user.delete.user');
 });
 
 
@@ -89,7 +100,7 @@ Route::post('/blog.status/{id}',[BlogController::class,'statusUpdate'])->name('b
 Route::post('/blog/feature/{id}',[BlogController::class,'featureUpdate'])->name('blog.feature');
 });
 
-// });
+});
 
 
 // email verification

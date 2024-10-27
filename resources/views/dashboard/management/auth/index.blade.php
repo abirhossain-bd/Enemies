@@ -118,10 +118,10 @@
                                  <td>
                                     <div class="d-flex justify-content-around">
                                         <div>
-                                            <a href="{{ route('category.edit',$manager->id) }}" class="btn btn-outline-info waves-effect waves-light"><i class="fa-solid fa-user-pen"></i></a>
+                                            <a href="{{ route('management.user.edit',$manager->id) }}" class="btn btn-outline-info waves-effect waves-light"><i class="fa-solid fa-user-pen"></i></a>
                                         </div>
                                         <div>
-                                            <form action="{{ route('category.destroy', $manager->id) }}" method="POST">
+                                            <form action="{{ route('management.user.destroy', $manager->id) }}" method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-danger waves-effect waves-light"><i class="fa-solid fa-trash"></i></button>
                                             </form>

@@ -105,12 +105,10 @@
                                     </form>
                                  </td>
                                  <td>
-                                    <div class="d-flex justify-content-around">
+                                    <div >
+
                                         <div>
-                                            <a href="{{ route('category.edit',$blogger->id) }}" class="btn btn-outline-info waves-effect waves-light"><i class="fa-solid fa-user-pen"></i></a>
-                                        </div>
-                                        <div>
-                                            <form action="{{ route('category.destroy', $blogger->id) }}" method="POST">
+                                            <form action="{{ route('management.user.delete.blogger', $blogger->id) }}" method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-danger waves-effect waves-light"><i class="fa-solid fa-trash"></i></button>
                                             </form>
@@ -176,12 +174,10 @@
                                     </form>
                                  </td>
                                  <td>
-                                    <div class="d-flex justify-content-around">
+                                    <div>
+
                                         <div>
-                                            <a href="{{ route('category.edit',$user->id) }}" class="btn btn-outline-info waves-effect waves-light"><i class="fa-solid fa-user-pen"></i></a>
-                                        </div>
-                                        <div>
-                                            <form action="{{ route('category.destroy', $user->id) }}" method="POST">
+                                            <form action="{{ route('management.user.delete.user', $user->id) }}" method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-danger waves-effect waves-light"><i class="fa-solid fa-trash"></i></button>
                                             </form>

@@ -126,11 +126,7 @@
                                           <span class="menu-text">Show Category</span>
                                       </a>
                                   </li>
-                                  <li class="menu-item">
-                                      <a class='menu-link' href='pages-invoice.html'>
-                                          <span class="menu-text">Create Category</span>
-                                      </a>
-                                  </li>
+
 
                           </div>
                       </li>
@@ -430,13 +426,15 @@
                                 <div class="dropdown-divider"></div>
 
                                 <!-- item-->
-                                <form action="{{ route('logout') }}" method="POST">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
-                                <a class='dropdown-item notify-item' href='pages-login.html'>
-                                    <i class="fe-log-out"></i>
-                                    <button type="submit" class="bg-transparent border-0 text-danger">Logout</button>
-                                </a>
                                 </form>
+
+                                <a class='dropdown-item notify-item' href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fe-log-out"></i>
+                                    Logout
+                                </a>
+
                             </div>
                         </li>
 

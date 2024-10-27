@@ -54,6 +54,30 @@ class ManagementController extends Controller
         }
     }
 
+    public function edit($id){
+        $manager = User::where('id',$id)->first();
+        return view('dashboard.management.auth.edit',compact('manager'));
+    }
+
+    public function update(Request $request, $id){
+        $request->validate([
+            'name'=>'required',
+            'role'=> 'required|not_in:0',
+        ]);
+        User::find($id)->update([
+            'name' => $request->name,
+            'role' => $request->role,
+            'updated_at' =>now(),
+        ]);
+        return redirect()->route('management.index')->with('success','Role Updated Successfully!');
+    }
+
+
+    public function destroy($id){
+        User::find($id)->delete();
+        return back()->with('success','User Deleted Successfully!');
+    }
+
 
 
     // role assign
@@ -96,6 +120,16 @@ class ManagementController extends Controller
         }
     }
 
+
+    public function destroy_blogger($id){
+        User::where('id', $id)->delete();
+        return back()->with('success','Blogger Deleted Successfully!');
+    }
+
+
+
+
+
     public function role_undo_user($id){
         $user = User::where('id', $id)->first();
 
@@ -106,6 +140,12 @@ class ManagementController extends Controller
             ]);
         return back()->with('insert_success','Role Changed Successfully!');
         }
+    }
+
+
+    public function destroy_user($id){
+        User::where('id',$id)->delete();
+        return back()->with('success','User Deleted Successfully!');
     }
 
 
